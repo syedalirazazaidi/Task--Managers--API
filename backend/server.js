@@ -3,8 +3,8 @@ const express = require("express");
 const colors = require("colors");
 const dotenv = require("dotenv").config();
 
-// const notFound = require("./middleware/not-found");
-// const errorHandlerMiddleware = require("./middleware/error-handler");
+const notFound = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler");
 const connectDB = require("./config/db");
 const port = process.env.PORT || 5000;
 
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/tasks", require("./routes/tasks"));
-// app.use(notFound);
-// app.use(errorHandlerMiddleware);
+app.use(notFound);
+app.use(errorHandlerMiddleware);
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
