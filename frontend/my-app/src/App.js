@@ -3,16 +3,18 @@ import React from 'react'
 import Dashboard from './pages/Dashboard'
 import './App.css'
 import TaskCard from './components/taskCard'
+import EditTask from './components/editTask'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Dashboard />
+        {/* <Dashboard />
         <div style={{marginTop:20 }}>
 
-        <TaskCard />
-        </div>
+        <TaskCard /> */}
+        <EditTask/>
+        {/* </div> */}
       </header>
       
     </div>
