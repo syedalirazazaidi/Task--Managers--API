@@ -7,8 +7,20 @@ const getTasks = asyncWrapper(async (req, res) => {
   res.status(200).json({ tasks });
 });
 const createTask = asyncWrapper(async (req, res) => {
-  const task = await Task.create(req.body);
-  res.status(201).json({ task });
+  // const task = await Task.create(req.body);
+  // res.status(201).json({ task });
+
+  if (!req.body.task) {
+    res.status(400);
+    throw new Error("Please add a text field");
+  }
+
+  const task = await Task.create({
+    task: req.body.task,
+    
+  });
+
+  res.status(200).json(task);
 });
 
 const getTask = asyncWrapper(async (req, res) => {

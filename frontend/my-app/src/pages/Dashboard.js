@@ -10,15 +10,11 @@ import { createTask } from '../features/tasks/taskSlice'
 export default function Dashboard() {
   const dispatch = useDispatch()
   const [task, setTask] = React.useState('')
-
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(task)
     dispatch(createTask({ task }))
     setTask('')
   }
-
-  console.log(task, 'TASKK')
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -35,6 +31,7 @@ export default function Dashboard() {
               className="textInput"
               type="text"
               value={task}
+              required
               onChange={(e) => setTask(e.target.value)}
             />
           </CardContent>
@@ -42,7 +39,7 @@ export default function Dashboard() {
             Submit
           </Button>
         </Card>
-        <TaskCard />
+        <TaskCard  />
       </form>
     </>
   )
