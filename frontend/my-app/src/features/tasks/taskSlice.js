@@ -12,10 +12,11 @@ const initialState = {
 // Create new task
 
 export const createTask = createAsyncThunk(
-  'tasks/create',
+  "tasks/create",
   async (taskData, thunkAPI) => {
     try {
-      return await taskService.createTask(taskData);
+      const creatTask= await taskService.createTask(taskData);
+      return creatTask
       
     } catch (error) {
       console.log(error)
@@ -32,7 +33,7 @@ export const createTask = createAsyncThunk(
 
 // Delete user task
 export const deleteTask = createAsyncThunk(
-  'task/delete',
+  "tasks/delete",
   async (id, thunkAPI) => {
     try {
       return await taskService.deleteTask(id)
@@ -49,7 +50,7 @@ export const deleteTask = createAsyncThunk(
 )
 // Get user goals
 export const getTasks = createAsyncThunk(
-  'tasks/gettasks',
+  "tasks/getAll",
   async (_, thunkAPI) => {
     try {
       const datAll = await taskService.getTasks()
@@ -77,12 +78,10 @@ export const taskSlice = createSlice({
       .addCase(createTask.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(createTask.fulfilled, (state, action) => {
-        const obj=action.payload
-        console.log(obj)
+      .addCase(createTask.fulfilled, (state, {payload}) => {
         state.isLoading = false
         state.isSuccess = true
-        state.tasks.push(obj)
+        state.tasks.push(payload)
       })
       .addCase(createTask.rejected, (state, action) => {
         state.isLoading = false
@@ -104,19 +103,20 @@ export const taskSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
-      // .addCase(getTasks.pending, (state) => {
-      //   state.isLoading = true
-      // })
-      // .addCase(getTasks.fulfilled, (state, { payload }) => {
-      //   state.isLoading = false
-      //   state.isSuccess = true
-      //   state.tasks = payload
-      // })
-      // .addCase(getTasks.rejected, (state, action) => {
-      //   state.isLoading = false
-      //   state.isError = true
-      //   state.message = action.payload
-      // })
+      .addCase(getTasks.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getTasks.fulfilled, (state, { payload }) => {
+        console.log(payload.tasks,"PAYLOAD")
+        state.isLoading = false
+        state.isSuccess = true
+         state.tasks = payload.tasks
+      })
+      .addCase(getTasks.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
   },
 })
 

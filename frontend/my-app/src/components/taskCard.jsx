@@ -9,28 +9,30 @@ import { useSelector, useDispatch } from 'react-redux'
 import TaskItem from './taskItem'
 import { getTasks, deleteTask } from '../features/tasks/taskSlice'
 import Spinner from './spinner'
-export default function TaskCard() {
+function TaskCard() {
   const dispatch = useDispatch()
-  const { tasks ,isError, message, isLoading} = useSelector((state) => state.tasks)
-  console.log(tasks.tasks,">>>????")
+  const { tasks, isError, message, isLoading } = useSelector(
+    (state) => state.tasks,
+  )
+  console.log(tasks, 'TASK%%%%%%')
 
   useEffect(() => {
     if (isError) {
-        console.log(message, "MESSAGE");
-      }
-    
+      console.log(message, 'MESSAGE')
+    }
+
     dispatch(getTasks())
-  }, [dispatch,isError])
+  }, [dispatch, isError])
 
   if (isLoading) {
-    return <Spinner />;
+    return <Spinner />
   }
   return (
+    // return  console.log(task._id,"...................",task.task)
+
     <div>
-    
-      {tasks.tasks && tasks.tasks.length > 0 ? (
-        tasks.tasks.map((task, index) => {
-           
+      {tasks && tasks.length > 0 ? (
+        tasks.map((task, index) => {
           return (
             <Card
               style={{
@@ -39,9 +41,9 @@ export default function TaskCard() {
                 height: 65,
                 margin: 10,
               }}
-              key={task.task._id}
+              key={task._id}
             >
-              <CardContent>{task  && task.task}</CardContent>
+              <CardContent>{task.task}</CardContent>
               <div
                 style={{
                   display: 'flex',
@@ -52,20 +54,20 @@ export default function TaskCard() {
                 }}
               >
                 {/* <DeleteIcon
-                  color="primary"
-                  onClick={() => dispatch(deleteTask(task._id))}
-                  style={{ cursor: 'pointer' }}
-                />
-                <EditIcon color="primary" style={{ cursor: 'pointer' }} /> */}
+                        color="primary"
+                        onClick={() => dispatch(deleteTask(task._id))}
+                        style={{ cursor: 'pointer' }}
+                      />
+                      <EditIcon color="primary" style={{ cursor: 'pointer' }} /> */}
               </div>
             </Card>
           )
-         }
-         )
+        })
       ) : (
         <h3>You have not set any tasks</h3>
       )}
-      
     </div>
   )
 }
+
+export default TaskCard
