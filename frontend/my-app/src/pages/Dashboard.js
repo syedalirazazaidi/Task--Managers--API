@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
-import { Alert } from '@mui/material'
+import { Alert  } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import '../App.css'
 import TaskCard from '../components/taskCard'
@@ -11,30 +11,25 @@ import { createTask } from '../features/tasks/taskSlice'
 export default function Dashboard() {
   const dispatch = useDispatch()
   const [task, setTask] = React.useState('')
-  const [messageTask, setMessageTask] = React.useState('');
+  const [isAlertVisible, setIsAlertVisible] = React.useState(false);
   const { taskSuccess } = useSelector((state) => state.tasks)
-  const newDisplayText = () => {
-         setTimeout(() => {
-         setMessageTask("task completed")
-          }, 1000)
-  }
+
+
   const onSubmit = (e) => {
+    setIsAlertVisible(true);
     e.preventDefault()
     dispatch(createTask({ task }))
     setTask('')
-    newDisplayText()
-    // sendMessage()
+    setTimeout(() => {
+      setIsAlertVisible(false);
+    }, 2000);
   }
-  // {taskSuccess === "success" ? (
-  //   <Alert severity="success">Task Added...</Alert>
-  // ) : null}
-
   return (
     <>
       <form onSubmit={onSubmit}>
         <Card
-          sx={{ maxWidth: 445 }}
-          style={{ backgroundColor: '#FFFFFF', padding: '25px' }}
+          sx={{ maxWidth: 745 }}
+          style={{ backgroundColor: '#FFFFFF', padding: '25px', marginTop: 20 }}
         >
           <CardContent>
             <Typography gutterBottom variant="h5">
@@ -49,8 +44,9 @@ export default function Dashboard() {
               onChange={(e) => setTask(e.target.value)}
             />
           </CardContent>
-          {messageTask}
-
+          {isAlertVisible &&
+            <Alert severity="success">Success, Task Added...</Alert>
+          }
           <Button variant="contained" type="submit">
             Submit
           </Button>

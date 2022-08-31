@@ -3,12 +3,13 @@ import '../App.css'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import CardContent from '@mui/material/CardContent'
-import { Card } from '@mui/material'
+import { Card,CircularProgress } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 
 import TaskItem from './taskItem'
 import { getTasks, deleteTask } from '../features/tasks/taskSlice'
 import Spinner from './spinner'
+
 function TaskCard() {
   const dispatch = useDispatch()
   const { tasks, isError, message, isLoading } = useSelector(
@@ -23,7 +24,7 @@ function TaskCard() {
   }, [dispatch, isError])
 
   if (isLoading) {
-    return <Spinner />
+    return   <CircularProgress size={24} color="secondary" />
   }
   return (
     <div>

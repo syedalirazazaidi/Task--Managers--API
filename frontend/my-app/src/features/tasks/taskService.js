@@ -11,7 +11,6 @@ const createTask = async (taskData) => {
 // Delete user task
 const deleteTask = async (taskId) => {
   const response = await axios.delete(API_URL + taskId)
-  console.log(response, 'RESP')
   return response.data
 }
 
