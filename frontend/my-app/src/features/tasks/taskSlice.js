@@ -7,6 +7,9 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
+  taskSuccess:"",
+  taskPending:"",
+  taskFailed:"",
   message: '',
 }
 // Create new task
@@ -77,15 +80,18 @@ export const taskSlice = createSlice({
     builder
       .addCase(createTask.pending, (state) => {
         state.isLoading = true
+        state.taskPending="pending"
       })
       .addCase(createTask.fulfilled, (state, {payload}) => {
         state.isLoading = false
         state.isSuccess = true
+        state.taskSuccess='success'
         state.tasks.push(payload)
       })
       .addCase(createTask.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
+        state.taskFailed="fail"
         state.message = action.payload
       })
       .addCase(deleteTask.pending, (state) => {
@@ -107,7 +113,6 @@ export const taskSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getTasks.fulfilled, (state, { payload }) => {
-        console.log(payload.tasks,"PAYLOAD")
         state.isLoading = false
         state.isSuccess = true
          state.tasks = payload.tasks

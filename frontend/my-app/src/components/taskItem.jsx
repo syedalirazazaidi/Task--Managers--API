@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import CardContent from '@mui/material/CardContent'
 import { useDispatch } from 'react-redux'
 import { deleteTask, getTasks } from '../features/tasks/taskSlice'
+import './text.css'
 const TaskItem = ({ alltask }) => {
   const { task, _id } = alltask.task
  
@@ -13,8 +14,8 @@ const TaskItem = ({ alltask }) => {
 //     dispatch(getTasks())
 //  }, [dispatch])
   return (
-    <Card
-      style={{ backgroundColor: '#FFFFFF', width: 483, height: 65, margin: 10 }}
+    <Card 
+       style={{ backgroundColor: '#FFFFFF', width: 483, height: 65, margin: 10 }}
     >
       <CardContent>{task}</CardContent>
       <div

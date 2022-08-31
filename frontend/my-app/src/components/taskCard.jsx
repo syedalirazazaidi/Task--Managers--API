@@ -3,7 +3,7 @@ import '../App.css'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import CardContent from '@mui/material/CardContent'
-import { Card, CircularProgress } from '@mui/material'
+import { Card } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 
 import TaskItem from './taskItem'
@@ -14,8 +14,6 @@ function TaskCard() {
   const { tasks, isError, message, isLoading } = useSelector(
     (state) => state.tasks,
   )
-  console.log(tasks, 'TASK%%%%%%')
-
   useEffect(() => {
     if (isError) {
       console.log(message, 'MESSAGE')
@@ -28,8 +26,6 @@ function TaskCard() {
     return <Spinner />
   }
   return (
-    // return  console.log(task._id,"...................",task.task)
-
     <div>
       {tasks && tasks.length > 0 ? (
         tasks.map((task, index) => {
@@ -50,15 +46,15 @@ function TaskCard() {
                   justifyContent: 'end',
                   alignItems: 'center',
                   marginRight: 42,
-                  marginTop: -10,
+                  marginTop: -38,
                 }}
               >
-                {/* <DeleteIcon
+                <DeleteIcon
                         color="primary"
                         onClick={() => dispatch(deleteTask(task._id))}
                         style={{ cursor: 'pointer' }}
                       />
-                      <EditIcon color="primary" style={{ cursor: 'pointer' }} /> */}
+                <EditIcon color="primary" style={{ cursor: 'pointer' }} />
               </div>
             </Card>
           )
