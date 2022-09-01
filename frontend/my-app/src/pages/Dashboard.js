@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { Alert  } from '@mui/material'
-import { useSelector, useDispatch } from 'react-redux'
+import {  useDispatch } from 'react-redux'
 import '../App.css'
 import TaskCard from '../components/taskCard'
 import { createTask } from '../features/tasks/taskSlice'
@@ -12,7 +12,7 @@ export default function Dashboard() {
   const dispatch = useDispatch()
   const [task, setTask] = React.useState('')
   const [isAlertVisible, setIsAlertVisible] = React.useState(false);
-  const { taskSuccess } = useSelector((state) => state.tasks)
+  // const { taskSuccess } = useSelector((state) => state.tasks)
 
 
   const onSubmit = (e) => {
@@ -51,7 +51,7 @@ export default function Dashboard() {
             Submit
           </Button>
         </Card>
-        <TaskCard />
+        <TaskCard task={task} setTask={setTask}/>
       </form>
     </>
   )

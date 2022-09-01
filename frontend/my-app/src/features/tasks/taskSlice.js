@@ -12,6 +12,8 @@ const initialState = {
   taskFailed:"",
   message: '',
 }
+
+
 // Create new task
 
 export const createTask = createAsyncThunk(
@@ -51,6 +53,26 @@ export const deleteTask = createAsyncThunk(
     }
   },
 )
+export const updateTask = createAsyncThunk(
+  "tasks/update",
+  async (edittext, thunkAPI) => {
+    console.log(edittext,"sadsaMMMM")
+    try {
+      const updateTask = await taskService.updateTask(edittext);
+      console.log(updateTask,"TASKKK")
+      return updateTask;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(error);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 // Get user goals
 export const getTasks = createAsyncThunk(
   "tasks/getAll",
@@ -122,6 +144,22 @@ export const taskSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
+      .addCase(updateTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateTask.fulfilled, (state, { payload }) => {
+        console.log(payload,"PAYLOAD")
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.tasks = state.tasks.map((task) =>
+          task._id === payload._id ? payload : task
+        );
+      })
+      .addCase(updateTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      });
   },
 })
 
