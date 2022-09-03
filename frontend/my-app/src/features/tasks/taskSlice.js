@@ -56,10 +56,8 @@ export const deleteTask = createAsyncThunk(
 export const updateTask = createAsyncThunk(
   "tasks/update",
   async (edittext, thunkAPI) => {
-    console.log(edittext,"sadsaMMMM")
     try {
       const updateTask = await taskService.updateTask(edittext);
-      console.log(updateTask,"TASKKK")
       return updateTask;
     } catch (error) {
       const message =
@@ -148,12 +146,17 @@ export const taskSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateTask.fulfilled, (state, { payload }) => {
-        console.log(payload,"PAYLOAD")
+       
+        const updatedTodos =state.tasks.map((task) =>
+       
+       task._id === payload.task._id ? payload.task : task
+      );
+      console.log(updatedTodos,"should update the value")
         state.isLoading = false;
         state.isSuccess = true;
-        state.tasks = state.tasks.map((task) =>
-          task._id === payload._id ? payload : task
-        );
+        // state.tasks = state.tasks.map((task) =>
+        //   task._id === payload.task._id ? payload.task : task
+        // );
       })
       .addCase(updateTask.rejected, (state, action) => {
         state.isLoading = false;

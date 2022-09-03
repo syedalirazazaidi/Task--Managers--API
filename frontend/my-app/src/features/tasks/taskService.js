@@ -9,7 +9,8 @@ const createTask = async (taskData) => {
 }
 // Update new Task
 const updateTask = async (edittext) => {
-  const { _id, task } = edittext;
+  
+  const { task,_id,  } = edittext;
   const response = await axios.patch(API_URL+_id, {task} );
   
   // API_URL + currentId

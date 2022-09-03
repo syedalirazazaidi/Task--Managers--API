@@ -11,11 +11,15 @@ import TaskItem from './taskItem'
 import { getTasks, deleteTask } from '../features/tasks/taskSlice'
 
 function TaskCard({task,setTask}) {
+
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const { tasks, isError, message, isLoading } = useSelector(
     (state) => state.tasks,
   )
+  console.log(tasks,"taskCARD")
+  // const newtask = task._id ? tasks.find((g) => g._id === task._id) : null;
+  // console.log(newtask,"newTASKKK")
   useEffect(() => {
     if (isError) {
       console.log(message, 'MESSAGE')
