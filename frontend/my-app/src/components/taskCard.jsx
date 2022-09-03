@@ -7,10 +7,9 @@ import { Card, CircularProgress } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import TaskItem from './taskItem'
 import { getTasks, deleteTask } from '../features/tasks/taskSlice'
 
-function TaskCard({ task, setTask }) {
+function TaskCard() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { tasks, isError, message, isLoading } = useSelector(
