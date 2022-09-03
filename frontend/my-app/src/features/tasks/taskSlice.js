@@ -7,22 +7,20 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
-  taskSuccess:"",
-  taskPending:"",
-  taskFailed:"",
+  taskSuccess: '',
+  taskPending: '',
+  taskFailed: '',
   message: '',
 }
-
 
 // Create new task
 
 export const createTask = createAsyncThunk(
-  "tasks/create",
+  'tasks/create',
   async (taskData, thunkAPI) => {
     try {
-      const creatTask= await taskService.createTask(taskData);
+      const creatTask = await taskService.createTask(taskData)
       return creatTask
-      
     } catch (error) {
       console.log(error)
       const message =
@@ -38,7 +36,7 @@ export const createTask = createAsyncThunk(
 
 // Delete user task
 export const deleteTask = createAsyncThunk(
-  "tasks/delete",
+  'tasks/delete',
   async (id, thunkAPI) => {
     try {
       return await taskService.deleteTask(id)
@@ -54,26 +52,27 @@ export const deleteTask = createAsyncThunk(
   },
 )
 export const updateTask = createAsyncThunk(
-  "tasks/update",
+  'tasks/update',
   async (edittext, thunkAPI) => {
     try {
-      const updateTask = await taskService.updateTask(edittext);
-      return updateTask;
+      const updateTask = await taskService.updateTask(edittext)
+
+      return updateTask
     } catch (error) {
       const message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString();
-      console.log(error);
-      return thunkAPI.rejectWithValue(message);
+        error.toString()
+      console.log(error)
+      return thunkAPI.rejectWithValue(message)
     }
-  }
-);
+  },
+)
 // Get user goals
 export const getTasks = createAsyncThunk(
-  "tasks/getAll",
+  'tasks/getAll',
   async (_, thunkAPI) => {
     try {
       const datAll = await taskService.getTasks()
@@ -100,18 +99,18 @@ export const taskSlice = createSlice({
     builder
       .addCase(createTask.pending, (state) => {
         state.isLoading = true
-        state.taskPending="pending"
+        state.taskPending = 'pending'
       })
-      .addCase(createTask.fulfilled, (state, {payload}) => {
+      .addCase(createTask.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.isSuccess = true
-        state.taskSuccess='success'
+        state.taskSuccess = 'success'
         state.tasks.push(payload)
       })
       .addCase(createTask.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
-        state.taskFailed="fail"
+        state.taskFailed = 'fail'
         state.message = action.payload
       })
       .addCase(deleteTask.pending, (state) => {
@@ -135,7 +134,7 @@ export const taskSlice = createSlice({
       .addCase(getTasks.fulfilled, (state, { payload }) => {
         state.isLoading = false
         state.isSuccess = true
-         state.tasks = payload.tasks
+        state.tasks = payload.tasks
       })
       .addCase(getTasks.rejected, (state, action) => {
         state.isLoading = false
@@ -143,26 +142,20 @@ export const taskSlice = createSlice({
         state.message = action.payload
       })
       .addCase(updateTask.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(updateTask.fulfilled, (state, { payload }) => {
-       
-        const updatedTodos =state.tasks.map((task) =>
-       
-       task._id === payload.task._id ? payload.task : task
-      );
-      console.log(updatedTodos,"should update the value")
-        state.isLoading = false;
-        state.isSuccess = true;
-        // state.tasks = state.tasks.map((task) =>
-        //   task._id === payload.task._id ? payload.task : task
-        // );
+        state.isLoading = false
+        state.isSuccess = true
+        state.tasks = state.tasks.map((task) =>
+          task._id === payload.task._id ? payload.task : task,
+        )
       })
       .addCase(updateTask.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
-      });
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
   },
 })
 

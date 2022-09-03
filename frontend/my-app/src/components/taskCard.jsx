@@ -5,21 +5,18 @@ import EditIcon from '@mui/icons-material/Edit'
 import CardContent from '@mui/material/CardContent'
 import { Card, CircularProgress } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 import TaskItem from './taskItem'
 import { getTasks, deleteTask } from '../features/tasks/taskSlice'
 
-function TaskCard({task,setTask}) {
-
+function TaskCard({ task, setTask }) {
   const dispatch = useDispatch()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const { tasks, isError, message, isLoading } = useSelector(
     (state) => state.tasks,
   )
-  console.log(tasks,"taskCARD")
-  // const newtask = task._id ? tasks.find((g) => g._id === task._id) : null;
-  // console.log(newtask,"newTASKKK")
+
   useEffect(() => {
     if (isError) {
       console.log(message, 'MESSAGE')
@@ -28,7 +25,7 @@ function TaskCard({task,setTask}) {
   }, [dispatch, isError])
 
   const EditTask = (task) => {
-    navigate("/editTask",{ state: { task } });
+    navigate('/editTask', { state: { task } })
   }
   if (isLoading) {
     return <CircularProgress size={24} color="secondary" />
@@ -65,7 +62,7 @@ function TaskCard({task,setTask}) {
                 <EditIcon
                   color="primary"
                   style={{ cursor: 'pointer' }}
-                  onClick={()=>EditTask(task)}
+                  onClick={() => EditTask(task)}
                 />
               </div>
             </Card>

@@ -9,14 +9,12 @@ const createTask = async (taskData) => {
 }
 // Update new Task
 const updateTask = async (edittext) => {
-  
-  const { task,_id,  } = edittext;
-  const response = await axios.patch(API_URL+_id, {task} );
-  
-  // API_URL + currentId
-  return response.data;
-};
+  const { task, _id } = edittext
+  const response = await axios.patch(API_URL + _id, { task })
 
+  // API_URL + currentId
+  return response.data
+}
 
 // Delete user task
 const deleteTask = async (taskId) => {
@@ -34,6 +32,6 @@ const taskService = {
   createTask,
   deleteTask,
   getTasks,
-  updateTask
+  updateTask,
 }
 export default taskService

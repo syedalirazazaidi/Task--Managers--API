@@ -17,12 +17,11 @@ const EditTask = () => {
   const { tasks } = useSelector(
     (state) => state.tasks,
   )
-  console.log(tasks,"EDITTASK")
   
   const dispatch = useDispatch()
   const [newTodo, setTodo] = React.useState(task)
-  const editTaskhandle = () => {
-    dispatch(updateTask(task))
+  const editTaskhandle = (id) => {
+    dispatch(updateTask({ _id: id, task:newTodo }))
   }
   return (
     <>
@@ -67,7 +66,7 @@ const EditTask = () => {
                 <Button
                   variant="contained"
                   style={{ width: 450 }}
-                  onClick={() => editTaskhandle()}
+                  onClick={() => editTaskhandle(task._id)}
                 >
                   Edit
                 </Button>
